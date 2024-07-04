@@ -630,6 +630,7 @@ form :is(h2) {
   #home-main-container {
     padding: 20px 25px;
   }
+  
   .header {
     display: flex;
     justify-content: space-between;
@@ -717,3 +718,32 @@ form :is(h2) {
     font-size: 0.7em;
   }
 }
+
+/* styles.css */
+.dropdown-filter-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#filters-heading {
+  margin-right: 10px;
+  font-size: 1.5em;
+}
+
+.dropdown-filter {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+#user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+

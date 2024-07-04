@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import global from "../Components/Global";
 import Delete from "../assets/Delete.png";
 import Edit from "../assets/edit.png";
+import DropdownFilter from "./DropdownFilter";
 
 function Tasks() {
   const dispatch = useDispatch();
@@ -18,7 +19,8 @@ function Tasks() {
   const todoList = todoData.todo.toReversed();
   const [showCreateTask, setShowCreateTask] = useState(false);
   const activeFilter = useSelector((state) => state.ActiveDeletedFilter);
-  const [taskEdit, setTaskEdit] = useState({})
+  const [taskEdit, setTaskEdit] = useState({});
+  const [statusFilter, setStatusFilter] = useState("All");
 
   const fetchTodos = async (userId) => {
     try {
@@ -120,11 +122,29 @@ function Tasks() {
     }
   };
 
+  const filterTasks = (tasks, statusFilter) => {
+    if (statusFilter === "All") return tasks;
+    return tasks.filter((task) => task.status === statusFilter);
+  };
+
+  const filteredTodoList = filterTasks(todoList, statusFilter);
+
   return (
     <>
       <div id="tasks-main-container">
+        <DropdownFilter
+          options={[
+            { label: "All", value: "All" },
+            { label: "To Do", value: "To Do" },
+            { label: "In Progress", value: "In Progress" },
+            { label: "Done", value: "Done" },
+          ]}
+          selected={statusFilter}
+          onChange={setStatusFilter}
+        />
         <ul id="tasks-list">
-          {todoList?.map((task) => (
+          {filteredTodoList?.map((task) => (
+            // {todoList?.map((task) => (
             <li key={task._id}>
               <span
                 className="completed-mark list-items"
@@ -141,7 +161,7 @@ function Tasks() {
               >
                 {task.task}
               </span>
-              <span className="status-span"> 
+              <span className="status-span">
                 {task.status}
               </span>
               <button
@@ -151,13 +171,13 @@ function Tasks() {
                   taskHandler();
                 }}
               >
-                <img src={Edit} width="15px" height="15px" style={{filter: "brightness(0) invert(1)"}}></img>
+                <img src={Edit} width="15px" height="15px" style={{ filter: "brightness(0) invert(1)" }}></img>
               </button>
               <button
                 className="delete-task-btn"
                 onClick={() => deleteTask(task._id, task.deleted)}
               >
-                <img src={Delete} width="20px" height="20px" style={{filter: "brightness(0) invert(1)"}}></img>
+                <img src={Delete} width="20px" height="20px" style={{ filter: "brightness(0) invert(1)" }}></img>
               </button>
               <span>{formatDate(task.date)}</span>
               <span
@@ -180,13 +200,13 @@ function Tasks() {
           onClick={
             activeFilter.isDeletedActive
               ? deleteAllTaskInDeletedTasks
-              : () => {setTaskEdit({}); taskHandler()}
+              : () => { setTaskEdit({}); taskHandler() }
           }
         >
           {activeFilter.isDeletedActive ? "Delete All" : "New Task"}
         </button>
       </div>
-      {showCreateTask && <CreateTask taskEdit={taskEdit}/>}
+      {showCreateTask && <CreateTask taskEdit={taskEdit} />}
     </>
   );
 }

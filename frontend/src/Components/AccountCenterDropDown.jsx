@@ -24,10 +24,10 @@ function AccountCenterDropDown() {
   return (
     <div id="parent-of-container">
       <div id="ACDD-main-container">
-        <section id="profile" onClick={profileHandler}>
+        {/* <section id="profile" onClick={profileHandler}>
           <p>Profile</p>
           <img src={ProfileIcon} alt="profile-icon" />
-        </section>
+        </section> */}
 
         <section id="logout" onClick={logoutHandler}>
           <p>Logout</p>
