@@ -7,6 +7,9 @@ import axios from "axios";
 import { setTodo } from "../Store/Reducers/TodoFilterSlice";
 import { toast } from "react-toastify";
 import global from "../Components/Global";
+import Delete from "../assets/Delete.png";
+import Edit from "../assets/edit.png";
+
 function Tasks() {
   const dispatch = useDispatch();
   const apiUrl = global.REACT_APP_API_BASE_URL;
@@ -15,6 +18,7 @@ function Tasks() {
   const todoList = todoData.todo.toReversed();
   const [showCreateTask, setShowCreateTask] = useState(false);
   const activeFilter = useSelector((state) => state.ActiveDeletedFilter);
+  const [taskEdit, setTaskEdit] = useState({})
 
   const fetchTodos = async (userId) => {
     try {
@@ -137,11 +141,23 @@ function Tasks() {
               >
                 {task.task}
               </span>
+              <span className="status-span"> 
+                {task.status}
+              </span>
+              <button
+                className="edit-task-btn"
+                onClick={() => {
+                  setTaskEdit(task);
+                  taskHandler();
+                }}
+              >
+                <img src={Edit} width="15px" height="15px" style={{filter: "brightness(0) invert(1)"}}></img>
+              </button>
               <button
                 className="delete-task-btn"
                 onClick={() => deleteTask(task._id, task.deleted)}
               >
-                Delete
+                <img src={Delete} width="20px" height="20px" style={{filter: "brightness(0) invert(1)"}}></img>
               </button>
               <span>{formatDate(task.date)}</span>
               <span
@@ -164,13 +180,13 @@ function Tasks() {
           onClick={
             activeFilter.isDeletedActive
               ? deleteAllTaskInDeletedTasks
-              : taskHandler
+              : () => {setTaskEdit({}); taskHandler()}
           }
         >
           {activeFilter.isDeletedActive ? "Delete All" : "New Task"}
         </button>
       </div>
-      {showCreateTask && <CreateTask />}
+      {showCreateTask && <CreateTask taskEdit={taskEdit}/>}
     </>
   );
 }

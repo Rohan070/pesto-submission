@@ -4,31 +4,50 @@ const User = require("../models/userModel");
 async function addTask(req, res) {
   console.log("Reached Add Task");
 
-  const { task, userId } = req.body;
+  const { task, userId, description, status, id } = req.body;
   console.log(userId);
 
   const existingUser = await User.findOne({ _id: userId });
   if (existingUser) {
-    const newTask = new Todo({
-      userId: userId,
-      task: task,
-      completed: false,
-      starred: false,
-      deleted: false,
-      date: new Date(),
-    });
+    const existingTask = await Todo.findOne({ userId: userId, _id: id });
 
-    await newTask.save();
-    res.send({
-      status: true,
-      message: "Task added successfully",
-    });
-  } else {
-    res.send({
-      status: false,
-      message: "No such user found!",
-    });
-  }
+    if (existingTask) {
+      // Update the existing task
+      existingTask.task = task;
+      existingTask.description = description;
+      existingTask.status = status;
+      existingTask.date = new Date(); // Update the date
+
+      await existingTask.save();
+      return res.send({
+        status: true,
+        message: "Task updated successfully",
+      });
+    }
+
+
+  const newTask = new Todo({
+    userId: userId,
+    task: task,
+    description: description,
+    status: status,
+    completed: false,
+    starred: false,
+    deleted: false,
+    date: new Date(),
+  });
+
+  await newTask.save();
+  res.send({
+    status: true,
+    message: "Task added successfully",
+  });
+} else {
+  res.send({
+    status: false,
+    message: "No such user found!",
+  });
+}
 }
 
 async function markCompleted(req, res) {
