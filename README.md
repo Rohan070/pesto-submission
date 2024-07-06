@@ -58,7 +58,7 @@ To get started with To-Do, follow these steps:
 </li>
 
 <li>Run test cases on backend:<pre><code class="language-bash">cd backend
-      npm run test</code></pre>
+npm run test</code></pre>
 </li>
 </ol>
 
