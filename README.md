@@ -56,6 +56,11 @@ To get started with To-Do, follow these steps:
 </li>
 <li>Start the backend server:<pre><code class="language-bash"> node index.js</code></pre>
 </li>
+
+<li>Run test cases on backend:<pre><code class="language-bash">
+      cd backend
+      npm run test</code></pre>
+</li>
 </ol>
 
 <h2 id="usage">Usage</h2>
