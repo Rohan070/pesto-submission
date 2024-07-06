@@ -60,6 +60,11 @@ To get started with To-Do, follow these steps:
 
 <h2 id="usage">Usage</h2>
 <p>Once the development server is running, you can access To-Do by visiting <code>http://localhost:5173/</code> in your web browser. Sign up or log in to begin managing your tasks!</p>
+
+<h2 id="usage">Pre-Created Users to test the todo app</h2>
+<p>Username: rohanpesto</p>
+<p>Password: Password@123</p>
+
 <h2 id="project-structure">Project Structure</h2>
 <p>The project follows a standard MERN stack structure:</p>
 <ul>
